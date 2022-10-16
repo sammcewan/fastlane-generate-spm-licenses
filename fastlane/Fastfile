@@ -1,0 +1,3 @@
+lane :test do
+  generate_spm_licenses
+end
