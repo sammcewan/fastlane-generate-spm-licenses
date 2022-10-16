@@ -3,6 +3,9 @@ require_relative '../helper/generate_spm_licenses_helper'
 
 module Fastlane
   module Actions
+
+    License = Struct.new(:name, :text)
+
     class GenerateSpmLicensesAction < Action
       def self.run(params)
         require 'plist'
