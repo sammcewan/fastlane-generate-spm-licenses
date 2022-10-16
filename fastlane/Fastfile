@@ -5,7 +5,8 @@ platform :ios do
   lane :generate_licences do
     generate_spm_licenses(
       workspace: "Example/Example.xcworkspace",
-      destination: "Example/Example/Settings.bundle/Acknowledgements.plist"
+      destination: "Example/Example/Settings.bundle/Acknowledgements.plist",
+      exclude: [],
     )
   end
 end
