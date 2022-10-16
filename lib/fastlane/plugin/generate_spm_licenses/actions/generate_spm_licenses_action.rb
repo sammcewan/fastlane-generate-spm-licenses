@@ -3,7 +3,6 @@ require_relative '../helper/generate_spm_licenses_helper'
 
 module Fastlane
   module Actions
-
     License = Struct.new(:name, :text)
 
     class GenerateSpmLicensesAction < Action
@@ -26,10 +25,16 @@ module Fastlane
           checkout_folder = File.join(workspace_derived_data_folder, 'SourcePackages', 'checkouts', '/**')
           checkout_folders = Dir[checkout_folder]
 
+          if checkout_folders.empty?
+            UI.user_error!("No checked out folders at '#{checkout_folder}'")
+          end
+
           # Grab licenses
           licenses = checkout_folders
                      .filter_map do |path|
                        name = URI(path).path.split('/').last
+
+                       UI.message("Found license for #{name}")
                        raw_license = File.join(path, 'LICENSE')
                        md_license = File.join(path, 'LICENSE.md')
                        txt_license = File.join(path, 'LICENSE.txt')
@@ -48,8 +53,7 @@ module Fastlane
           destination_path = File.expand_path(params[:destination])
           File.write(destination_path, wrapped_settings.to_plist)
         rescue StandardError => e
-          UI.error(e)
-          UI.user_error!("Unable to set value to plist file at '#{workspace_path}'")
+          UI.user_error!(e)
         end
       end
 
