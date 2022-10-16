@@ -31,11 +31,11 @@ module Fastlane
                        md_license = File.join(path, 'LICENSE.md')
                        txt_license = File.join(path, 'LICENSE.txt')
                        if File.exist?(raw_license)
-                         License.new name, File.read(raw_license)
+                         License.new(name, File.read(raw_license))
                        elsif File.exist?(md_license)
-                         License.new name, File.read(md_license)
+                         License.new(name, File.read(md_license))
                        elsif File.exist?(txt_license)
-                         License.new name, File.read(txt_license)
+                         License.new(name, File.read(txt_license))
                        end
                      end
                      .filter_map do |license|
